@@ -1,4 +1,4 @@
-# default
+# Meta-data editor
 
 Vite 4.0.2, 
 Vue 3.2.45, 
