@@ -11,15 +11,22 @@
     </v-navigation-drawer>
 
     <v-main class="bg-grey-lighten-2">
-      <v-container>
-        <v-row>
-            <v-col class="mt-2" cols="12">
-              <v-sheet>
-                <div>
-                  Main
+      <v-container class="fill-height">
+        <v-row class="fill-height">
+          <v-col class="mt-2" cols="12">
+            <v-sheet class="fill-height d-flex align-center justify-center">
+              <div
+                class="bg-gray-50 w-full min-h-screen flex items-center justify-center dark:bg-gray-900"
+              >
+                <div class="flex flex-col items-center justify-center">
+                  <DropZone></DropZone>
                 </div>
-              </v-sheet>
-            </v-col>
+              </div>
+              <!-- <v-btn size="x-large" color="success" @click="accessingFolder">
+                Open meta-data directory and get permission
+              </v-btn> -->
+            </v-sheet>
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -27,17 +34,20 @@
 </template>
 
 <script>
-import { useMetaDirectoryStore } from "@/stores/metaDirectory";
-import { storeToRefs } from "pinia";
-
+// import { mapState, mapActions } from "pinia";
+// import { useMetaDirectoryStore } from "@/stores/metaDirectory";
+import DropZone from "./components/DropZone.vue";
 
 export default {
   data: () => ({ drawer: null }),
-  setup() {
-    const store = useMetaDirectoryStore();
-    const { files, directoryHandle } = storeToRefs(store);
-
-    return { files, directoryHandle };
+  components: {
+    DropZone,
   },
+  // computed: {
+  //   ...mapState(useMetaDirectoryStore, ["files", "directoryHandle"]),
+  // },
+  // methods: {
+  //   ...mapActions(useMetaDirectoryStore, ["accessingFolder"]),
+  // },
 };
 </script>
