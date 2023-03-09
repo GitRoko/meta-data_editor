@@ -1,0 +1,393 @@
+version: 1 # change version when file is changed
+description: Consumer collected by the abracadabra.
+group: Abracadabra
+fields:
+  169af51a-3bba-43d1-b6f7-a43b7bc96b5d:
+    field_name: id_profile
+    json_type: string
+    td_type: varchar
+    mandatory: true
+    pydantic_type: StrictStr
+    example: '1599143884690'
+    faker:
+      type: foreign
+      dataset: cas_consumers_raw
+      field: id
+    pii: false
+    description: Latest CDP contact's id_profile.
+  611bc697-cd23-49cc-8262-7964d25f05d6:
+    field_name: id_legacy
+    json_type: string
+    td_type: varchar
+    mandatory: true
+    pydantic_type: StrictStr
+    example: '1599143884690'
+    faker:
+      type: integer
+      unique: false
+      to_str: true
+    pii: false
+    description: List of all contact's id_legacy
+  a10bf3c1-239c-4179-b993-030627fc6a50:
+    field_name: age_range
+    json_type: string
+    td_type: varchar
+    mandatory: true
+    pydantic_type: StrictStr
+    example: 18-24
+    faker:
+      type: enum
+      values:
+      - 18-25
+      - 25-40
+      - 40+
+    pii: true
+    description: Contact's age range
+  7df886c1-6d41-496f-b4de-e462aa2ba2ef:
+    field_name: city
+    json_type: string
+    td_type: varchar
+    mandatory: true
+    pydantic_type: StrictStr
+    example: Palermo
+    faker:
+      type: sample
+      sample: cities
+    pii: true
+    description: Contact's address city field
+  dfbbf5e2-3212-406c-82d4-9cbaf99d8a9d:
+    field_name: smoking_habits
+    json_type: number
+    td_type: bigint
+    mandatory: false
+    pydantic_type: StrictInt
+    example: 20
+    faker:
+      type: enum
+      values:
+      - null
+      - 3
+      - 5
+      - 8
+    pii: false
+    description: 'Smoking Habit: smoked cigarettes'
+  # cod_post:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: '40129'
+  #   faker:
+  #     type: zip
+  #   pii: true
+  #   description: 'Contact''s address: postal code field'
+  # date_of_birth:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: '1964-01-19'
+  #   faker:
+  #     type: date
+  #     format: '%Y-%m-%d'
+  #     min_year: 1960
+  #     max_year: 2000
+  #   pii: true
+  #   description: Contact date of birth
+  # date_of_switch:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: '2021-03-19'
+  #   faker:
+  #     type: date
+  #     format: '%Y-%m-%d'
+  #   pii: false
+  #   description: Date when contact was switch form an ambassador to the current one
+  # email:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: antoniopaolo.verbeni@sysdata.it
+  #   faker:
+  #     type: foreign
+  #     dataset: onetrust_consents_raw
+  #     field: datasubjectemail
+  #   pii: true
+  #   description: Contact email address
+  # first_name:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: antonio
+  #   faker:
+  #     type: sample
+  #     sample: firstnames
+  #   pii: true
+  #   description: Contact name
+  # follow_up_preferences:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: false
+  #   pydantic_type: StrictStr
+  #   example: phone
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - null
+  #     - email
+  #     - phone
+  #     - im
+  #   pii: false
+  #   description: List (in string format) of the preferred way of contact.
+  # interests:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: false
+  #   pydantic_type: StrictStr
+  #   example: trials, campaigns, sales
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - null
+  #     - trials
+  #     - offers
+  #     - news
+  #   pii: false
+  #   description: List (in string format) of contact's activities of interests
+  # last_name:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: verbeni
+  #   faker:
+  #     type: sample
+  #     sample: lastnames
+  #   pii: true
+  #   description: Contact surname
+  # number:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: '23'
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - '1'
+  #     - '25'
+  #     - '100'
+  #   pii: true
+  #   description: 'Contact''s address: home number field'
+  # phone:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: '3891031170'
+  #   faker:
+  #     type: phone
+  #   pii: true
+  #   description: Contact phone number (unique for each contact)
+  # profile_source_system:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: Ambassador
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - Ambassador
+  #   pii: false
+  #   description: Contact creation source
+  # province:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: Palermo
+  #   faker:
+  #     type: sample
+  #     sample: cities
+  #   pii: true
+  #   description: 'Contact''s address: province ID field'
+  # street:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: via de Carracci
+  #   faker:
+  #     type: sample
+  #     sample: addresses
+  #   pii: true
+  #   description: 'Contact''s address: street field'
+  # smoking_habits_brand:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: false
+  #   pydantic_type: StrictStr
+  #   example: VAPODS
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - null
+  #     - CAO
+  #   pii: false
+  #   description: 'Smoking Habit: cigarette brand'
+  # smoking_habits_category:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: TVAPOR
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - SIGARI
+  #   pii: false
+  #   description: 'Smoking Habit: cigarette category'
+  
+  
+  # smoking_habits_product:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: false
+  #   pydantic_type: StrictStr
+  #   example: '1272'
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - null
+  #     - '1'
+  #     - '25'
+  #     - '100'
+  #   pii: false
+  #   description: 'Smoking Habit: cigarette product'
+  # contact_status:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: lead, trialist, consumer
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - consumer
+  #   pii: false
+  #   description: Contact status
+  # date_assignment_ambassador:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: '2020-02-02'
+  #   faker:
+  #     type: date
+  #     format: '%Y-%m-%d'
+  #   pii: false
+  #   description: Date when the contact was assigned to the ambassador
+  # td_c360_operation_time:
+  #   json_type: number
+  #   td_type: bigint
+  #   mandatory: false
+  #   pydantic_type: StrictInt
+  #   example: 1
+  #   faker:
+  #     type: integer
+  #     unique: false
+  #   pii: false
+  #   description: TD technical field
+  # id_ambassador:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: '45678'
+  #   faker:
+  #     type: integer
+  #     unique: false
+  #     to_str: true
+  #   pii: false
+  #   description: Ambassador id which the contact is currently associated with
+  # change_status:
+  #   json_type: number
+  #   td_type: bigint
+  #   mandatory: false
+  #   pydantic_type: StrictInt
+  #   example: 1
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - 0
+  #     - 1
+  #     - 2
+  #   pii: false
+  #   description: Action that caused the contact update on the staging area
+  # preferred_stick_flavour_sku:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: false
+  #   pydantic_type: StrictStr
+  #   example: '1234'
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - null
+  #     - '1'
+  #     - '25'
+  #     - '100'
+  #   pii: false
+  #   description: SKU code of the consumer's preferred sick flavour
+  # hot_lead:
+  #   json_type: number
+  #   td_type: bigint
+  #   mandatory: false
+  #   pydantic_type: StrictInt
+  #   example: 1
+  #   faker:
+  #     type: integer
+  #     unique: false
+  #     to_str: false
+  #   pii: false
+  #   description: Contact's lead information
+  # created_date:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: false
+  #   pydantic_type: StrictStr
+  #   example: '2021-03-01 09:28:23'
+  #   faker:
+  #     type: date
+  #     format: '%Y-%m-%d %H:%M:%S'
+  #   pii: false
+  #   description: Date of creation
+  # acquisition_source:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: ''
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - test
+  #   pii: false
+  #   description: acquisition source
+  # contacted_by_ambassador:
+  #   json_type: string
+  #   td_type: varchar
+  #   mandatory: true
+  #   pydantic_type: StrictStr
+  #   example: ''
+  #   faker:
+  #     type: enum
+  #     values:
+  #     - 'yes'
+  #   pii: false
+  #   description: contacted by ambassador

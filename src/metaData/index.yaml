@@ -1,0 +1,85 @@
+version: 1  # change version when file is changed
+module:
+  - name: raw metadata  # (or harmonized)
+    description: raw metadata # (or harmonized)
+    data:
+      name: 
+        widget: filename
+        validation: 
+          regexp: '^[a-zA-Z0-9\s._-]+$'
+          unique: true
+      description: 
+        widget: text
+        validation: 
+          regexp: '^[a-zA-Z0-9\s._-]+$'
+          unique: false 
+      group:
+        widget: text
+        validation: 
+          regexp: '^[a-zA-Z0-9\s._-]+$'
+          unique: false
+      fields:
+        widget: list # not static, list of panels
+        items: 
+          - field:
+              widget: uuid # without id, use field name like key
+              items:
+                - field_name:
+                    widget: text
+                    validation:
+                      regexp: [a-Z]
+                      unique: true
+                - json_type: 
+                    widget: enum
+                    values:
+                      - string
+                      - number
+                      - object
+                      - array
+                      - boolean
+                # - td_type: 
+                #     widget: enum
+                #     values:
+                #       - varchar
+                #       - bigint
+                #       - double
+                #       - array(varchar)
+                #     mapping:
+                #       json_type:
+                #         string:
+                #           - varchar
+                #         number:
+                #           - bigint
+                #           - double
+                # - mandatory: 
+                #     widget: checkbox
+                # - pydantic_type: 
+                #     widget: enum
+                #     values:
+                #       - varchar
+                #       - bigint
+                #       - double
+                #       - array(varchar)
+                #     mapping:
+                #       json_type:
+                #         string:
+                #           - varchar
+                #         number:
+                #           - bigint
+                #           - double
+                # - example: 
+                #     widget: checkbox
+                # - faker:
+                #   widget: enum
+                #   values:
+                #     - sample
+                #     - zip
+                #     - phone
+                #     - ip
+                # - pii:
+                #     widget: checkbox
+                # - description:
+                #     widget: text
+                #     validation: 
+                #       regexp: [a-Z]
+                #       unique: false
