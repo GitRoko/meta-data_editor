@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useMetaDirectoryStore } from "@/stores/metaDirectory";
+
 
 
 // export const useCurrentFileStore = defineStore('currentFile', {
@@ -26,15 +28,14 @@ import { ref } from "vue";
 //   },
 // })
 export const useCurrentFileStore = defineStore('currentFile', () => {
-  const version = ref(0);
-  const description = ref('');
-  const group = ref('');
-  const fields = ref(null);
-  const handle = ref(null);
-  const name = ref('');
+  let version = ref(0);
+  let description = ref('');
+  let group = ref('');
+  let fields = ref(null);
+  let handle = ref(null);
+  let name = ref('');
 
   const setFileData = (data) => {
-    console.log(data);
     version.value = data.fileData.version;
     description.value = data.fileData.description;
     group.value = data.fileData.group;
@@ -43,6 +44,16 @@ export const useCurrentFileStore = defineStore('currentFile', () => {
     name.value = data.fileName;
   }
 
+  // const getFilesListForCurrentFile = () => {
+  //   const metaDirectoryStore = useMetaDirectoryStore();
+  //   const list = metaDirectoryStore.filesNamesList;
+  //   return list.filter(item => item !== name.value);
+  // }
+  const getFilesListForCurrentFile = computed(() => {
+    const metaDirectoryStore = useMetaDirectoryStore();
+    const list = metaDirectoryStore.filesNamesList;
+    return list.filter(item => item !== name.value) || [];
+  });
   return {
     version,
     description,
@@ -51,5 +62,6 @@ export const useCurrentFileStore = defineStore('currentFile', () => {
     handle,
     name,
     setFileData,
+    getFilesListForCurrentFile,
   }
 })

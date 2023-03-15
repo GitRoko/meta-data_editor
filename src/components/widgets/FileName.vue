@@ -1,89 +1,51 @@
 <template>
   <div>
     <v-text-field
-      :model-value="name"
-      :label="label"
+      v-model="name"
+      :label="keyItem"
       variant="underlined"
-      readonly
-      @input="$emit('update:name', $event.target.value)"
-      :rules="[
-        rules.regexp(name, validation.regexp, label),
-        rules.unique(name, validation.unique, list),
-      ]"
+      :rules="validationRules"
     ></v-text-field>
   </div>
 </template>
 
 <script>
-import { toRefs } from "vue";
+// import store
+import { useCurrentFileStore } from "@/stores/currentFile";
+import { storeToRefs } from "pinia";
+import { rules } from "@/validation/rules";
 
 export default {
   props: {
-    list: {
-      type: Array,
-    },
-    name: {
-      type: String,
-    },
-    label: {
-      type: String,
-    },
-    validation: {
+    renderData: {
       type: Object,
     },
+    keyItem: {
+      type: String,
+    },
+    modelValue: {
+      type: String,
+    },
   },
-  emits: ["update:name"],
-  setup: (props) => {
-    const { name } = toRefs(props);
-    const rules = {
-      regexp: (value, regexp, label) => {
-        if (regexp === undefined) {
-          return true;
-        }
-        const pattern = new RegExp(regexp);
-        return pattern.test(value) || `Invalid ${label}, use: ${regexp}`;
-      },
-      unique: (value, isUnique, list = []) => {
-        if (isUnique) {
-          const newList = list.filter((item) => item !== value);
-          const result = newList.includes(value);
-          if (!result) {
-            return true;
-          } else {
-            return `Value ${value} is not unique`;
-          }
-        }
-      },
-    };
+  setup: () => {
+    const { name } = storeToRefs(useCurrentFileStore());
+    const { getFilesListForCurrentFile } = storeToRefs(useCurrentFileStore());
+    const validationRules = [
+      (v) => rules.regexp(v, renderData.validation.regexp, keyItem),
+      (v) =>
+        rules.unique(
+          v,
+          renderData.validation.unique,
+          getFilesListForCurrentFile
+        ),
+    ];
+  
     return {
-      rules,
+      validationRules,
       name,
+      getFilesListForCurrentFile,
     };
   },
-
-  // data: () => ({
-  //   value: "",
-  //   rules: {
-  //     regexp: (value, regexp, label) => {
-  //       if (regexp === undefined) {
-  //         return true;
-  //       }
-  //       const pattern = new RegExp(regexp);
-  //       return pattern.test(value) || `Invalid ${label}, use: ${regexp}`;
-  //     },
-  //     unique: (value, isUnique, list = []) => {
-  //       if (isUnique) {
-  //         const result = list.includes(value);
-  //         return result || `Value ${value} is not unique`;
-  //       } else {
-  //         return true;
-  //       }
-  //     },
-  //   },
-  // }),
-  // mounted() {
-  //   this.value = this.propValue.value;
-  // },
 };
 </script>
 

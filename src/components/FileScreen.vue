@@ -13,16 +13,10 @@
               <component
                 :is="aliasComponentName[key]"
                 :renderData="index.fileData.module[0].data[key]"
+                v-model="store[key]"
+                :keyItem="key"
               ></component>
-              <!-- <component
-                :is="aliasComponentName[key]"
-                :value="value"
-                :name="key"
-                :renderData="index.fileData.module[0].data[key]"
-                :fileData="fileData"
-              ></component> -->
             </div>
-            
           </template>
         </v-sheet>
       </v-col>
@@ -31,33 +25,31 @@
 </template>
 
 <script>
-import { useMetaDirectoryStore } from "@/stores/metaDirectory";
-import Name from "@/components/Name.vue";
-import FileDescription from "@/components/FileDescription.vue";
-import FileGroup from "@/components/FileGroup.vue";
-import Fields from "@/components/Fields.vue";
-import { useCurrentFileStore } from "@/stores/currentFile";
+import FileName from "@/components/widgets/FileName.vue";
+import TextInput from "@/components/widgets/TextInput.vue";
+import FieldsList from "@/components/widgets/FieldsList.vue";
 
+import { useMetaDirectoryStore } from "@/stores/metaDirectory";
+import { useCurrentFileStore } from "@/stores/currentFile";
 import { storeToRefs } from "pinia";
 
 export default {
   name: "FileScreen",
-  components: { Name, FileDescription, FileGroup, Fields },
+  components: { FileName, TextInput, FieldsList },
   setup() {
     const aliasComponentName = {
-      name: 'Name',
-      description: 'FileDescription',
-      group: 'FileGroup',
-      fields: 'Fields',
+      name: 'TextInput',
+      description: 'TextInput',
+      group: 'TextInput',
+      fields: 'FieldsList',
     };
     const { index } = storeToRefs(useMetaDirectoryStore());
-    const { description } = storeToRefs(useCurrentFileStore());
-
+    let store = useCurrentFileStore();
 
     return {
       index,
       aliasComponentName,
-      description
+      store,
     };
   },
 };

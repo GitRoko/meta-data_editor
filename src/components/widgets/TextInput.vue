@@ -1,32 +1,36 @@
 <template>
   <div>
+    <!-- <p>renderData: {{ renderData }}</p>
+    <p>keyItem: {{ keyItem }}</p>
+    <p>modelValue: {{ modelValue }}</p> -->
     <v-text-field
-    :modelValue="modelValue"
-    @input="$emit('update:modelValue', $event)"
-    
-    
+      :modelValue="modelValue"
+      @update:modelValue="($event) => $emit('update:modelValue', $event)"
       :rules="[
-        rules.regexp(modelValue, validation.regexp, label),
-        rules.unique(modelValue, validation.unique, validation.list),
+        (v) => rules.regexp(v, renderData.validation.regexp, keyItem),
+        (v) => rules.unique(v, renderData.validation.unique, list),
       ]"
-      :label="label"
+      :label="keyItem"
       variant="underlined"
     ></v-text-field>
   </div>
 </template>
-
 <script>
 export default {
   props: {
+    renderData: {
+      type: Object,
+    },
     modelValue: {
       type: String,
     },
-    label: {
+    keyItem: {
       type: String,
     },
-    validation: {
-      type: Object,
-    },
+    list: {
+      type: Array,
+      default: () => [],
+    }
   },
   emits: ["update:modelValue"],
   setup: () => {
@@ -40,14 +44,12 @@ export default {
       },
       unique: (value, isUnique, list = []) => {
         if (isUnique) {
-          const result = list.includes(value);
-          return result || `Value ${value} is not unique`;
+          return !list.includes(value) || `Value ${value} is not unique`;
         } else {
           return true;
         }
       },
     };
-
     return {
       rules,
     };
@@ -56,81 +58,7 @@ export default {
 </script>
 
 <style scoped>
-.v-text-field :deep(input) {
-  /* font-size: 1em; */
+/* .v-text-field :deep(input) {
   font-weight: bold;
-  /* text-transform: uppercase; */
-}
+} */
 </style>
-
-<!-- 
-<template>
-  <div>
-    <v-text-field
-      :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
-      :rules="[rules.regexp(modelValue, validation.regexp, label), rules.unique(modelValue, validation.unique, validation.list)]"
-      :label="label"
-      variant="underlined"
-      type="input"
-    ></v-text-field>
-    <p>Child: {{ modelValue }}</p>
-  </div>
-</template>
-
-<script>
-import { toRefs } from "vue";
-
-export default {
-  props: {
-    modelValue: {
-      type: String,
-    },
-    label: {
-      type: String,
-    },
-    validation: {
-      type: Object,
-    },
-  },
-  setup: (props, { emit }) => {
-    console.log(props);
-    const { modelValue } = toRefs(props);
-    const updateValue = (e) => {
-      emit("update:modelValue", e.target.value);
-    };
-
-    const rules = {
-      regexp: (value, regexp, label) => {
-        if (regexp === undefined) {
-          return true;
-        }
-        const pattern = new RegExp(regexp);
-        return pattern.test(value) || `Invalid ${label}, use: ${regexp}`;
-      },
-      unique: (value, isUnique, list = []) => {
-        if (isUnique) {
-          const result = list.includes(value);
-          return result || `Value ${value} is not unique`;
-        } else {
-          return true;
-        }
-      },
-    };
-
-    return {
-      updateValue,
-      modelValue,
-      rules,
-    };
-  },
-};
-</script>
-
-<style scoped>
-.v-text-field :deep(input) {
-  /* font-size: 1em; */
-  font-weight: bold;
-  /* text-transform: uppercase; */
-}
-</style> -->

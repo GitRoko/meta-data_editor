@@ -1,53 +1,54 @@
 <template>
-  <p>
-
-    FieldsList: {{ item }}
-  </p>
-    <!-- <div v-for="field in fields">
-      <template v-for="fieldList in fieldsList">
-        <div v-for="item in fieldList">
-          <component :is="item" :items="items[item]" :field="field"></component>
-        </div>
-      </template>
-    </div> -->
-  <!-- <div v-if="fieldsList">
-    <template v-for="field in fields">
-      <template v-for="fieldList in fieldsList">
-        <div v-for="item in fieldList">
-          <component :is="item" :items="items[item]" :field="field"></component>
-        </div>
-      </template>
-    </template>
-  </div> -->
+  <div v-for="(value, key) in modelValue" key="key" class="my-3">
+    <component
+      :is="aliasComponentName[renderData.items[0].field.widget]"
+      :renderData="renderData.items[0].field.items"
+      :componentData="value"
+      :id="key"
+      :modelValue="modelValue[key]"
+      @update="$emit('update:modelValue', $event)"
+    ></component>
+  </div>
 </template>
 
 <script>
+// import { computed } from "vue";
+// import { useCurrentFileStore } from "@/stores/currentFile";
 import FieldUUID from "@/components/widgets/FieldUUID.vue";
-import { computed } from "vue";
 
 export default {
-  components: {
-    FieldUUID,
-  },
   props: {
-    item: {
+    renderData: {
       type: Object,
     },
-    // fieldsList: {
-    //   type: Array,
-    // },
-    // fields: {
-    //   type: Object,
-    // },
+    modelValue: {
+      type: Object,
+    },
+    keyItem: {
+      type: String,
+    },
+    list: {
+      type: Array,
+      default: () => [],
+    }
   },
+  components: { FieldUUID },
+  emits: ["update:modelValue"],
   setup: (props) => {
-    // const fieldsIDList = computed(() => Object.keys(props.fields));
-
-    // return {
-    //   fieldsIDList,
-    // };
+    const aliasComponentName = {
+      uuid: 'FieldUUID',
+    };
+    return {
+      aliasComponentName,
+    };
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-text-field :deep(input) {
+  /* font-size: 1em; */
+  font-weight: bold;
+  /* text-transform: uppercase; */
+}
+</style>

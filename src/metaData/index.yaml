@@ -21,15 +21,15 @@ module:
       fields:
         widget: list # not static, list of panels
         items: 
-          - field:
+          - field: # uuid is hardcoded?
               widget: uuid # without id, use field name like key
-              items:
-                - field_name:
+              items: # maybe best way use type not Array and set type like type in file - Object
+                field_name:
                     widget: text
                     validation:
-                      regexp: [a-Z]
-                      unique: true
-                - json_type: 
+                      regexp: '^[a-zA-Z0-9\s._-]+$'
+                      unique: true # do this as it !!!!!!
+                json_type:
                     widget: enum
                     values:
                       - string
@@ -37,38 +37,63 @@ module:
                       - object
                       - array
                       - boolean
-                # - td_type: 
-                #     widget: enum
-                #     values:
-                #       - varchar
-                #       - bigint
-                #       - double
-                #       - array(varchar)
-                #     mapping:
-                #       json_type:
-                #         string:
-                #           - varchar
-                #         number:
-                #           - bigint
-                #           - double
-                # - mandatory: 
-                #     widget: checkbox
-                # - pydantic_type: 
-                #     widget: enum
-                #     values:
-                #       - varchar
-                #       - bigint
-                #       - double
-                #       - array(varchar)
-                #     mapping:
-                #       json_type:
-                #         string:
-                #           - varchar
-                #         number:
-                #           - bigint
-                #           - double
-                # - example: 
-                #     widget: checkbox
+                mandatory: 
+                    widget: checkbox
+                td_type: 
+                    widget: enum
+                    values:
+                      - varchar
+                      - bigint
+                      - double
+                      - array(varchar)
+                    mapping:
+                      json_type:
+                        string:
+                          - varchar
+                        number:
+                          - bigint
+                          - double
+                        array:
+                          - string
+                          - array(varchar)
+                        object:
+                          - varchar
+                        boolean:
+                          - varchar
+                pydantic_type: 
+                    widget: enum # change name to enumMapping, delete values
+                    values:
+                      - StrictStr
+                      - StrictInt
+                      - StrictFloat
+                      - List
+                      - Dict
+                      - StrictBool
+                    mapping:
+                      json_type:
+                        string:
+                          - StrictStr
+                        number:
+                          - StrictInt
+                          - StrictFloat
+                        array:
+                          - List
+                        object:
+                          - Dict
+                        boolean:
+                          - StrictBool
+                example: 
+                    widget: text # how to validate? or need make new vidget?
+                    validation: 
+                      regexp: '^[a-zA-Z0-9\s._-]+$' # validation type
+                      unique: false
+                description:
+                    widget: text
+                    validation:
+                      regexp: '^[a-zA-Z0-9\s._-]+$'
+                      unique: false
+                pii:
+                    widget: checkbox
                 # - faker:
                 #   widget: enum
                 #   values:
@@ -76,10 +101,3 @@ module:
                 #     - zip
                 #     - phone
                 #     - ip
-                # - pii:
-                #     widget: checkbox
-                # - description:
-                #     widget: text
-                #     validation: 
-                #       regexp: [a-Z]
-                #       unique: false
