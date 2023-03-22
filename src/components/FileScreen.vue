@@ -32,6 +32,7 @@ import FieldsList from "@/components/widgets/FieldsList.vue";
 import { useMetaDirectoryStore } from "@/stores/metaDirectory";
 import { useCurrentFileStore } from "@/stores/currentFile";
 import { storeToRefs } from "pinia";
+import { provide, computed } from 'vue'
 
 export default {
   name: "FileScreen",
@@ -44,12 +45,19 @@ export default {
       fields: 'FieldsList',
     };
     const { index } = storeToRefs(useMetaDirectoryStore());
+    
     let store = useCurrentFileStore();
+    // const fieldsNamesList = ref(store.getFieldsNamesListForCurrentFile);
+    const fieldsNamesList = computed(() => store.getFieldsNamesListForCurrentFile);
+
+    provide('fieldsNamesList', fieldsNamesList);
+
 
     return {
       index,
       aliasComponentName,
       store,
+      fieldsNamesList,
     };
   },
 };

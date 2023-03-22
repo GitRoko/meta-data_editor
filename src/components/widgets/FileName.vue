@@ -1,11 +1,20 @@
 <template>
   <div>
-    <v-text-field
+    <p>
+      keyItem: {{ keyItem }}
+    </p>
+    <p>
+      modelValue: {{ modelValue }}
+    </p>
+    <p>
+      renderData:  {{ renderData }}
+    </p>
+    <!-- <v-text-field
       v-model="name"
       :label="keyItem"
       variant="underlined"
       :rules="validationRules"
-    ></v-text-field>
+    ></v-text-field> -->
   </div>
 </template>
 

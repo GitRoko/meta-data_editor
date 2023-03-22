@@ -15,6 +15,7 @@
 // import { computed } from "vue";
 // import { useCurrentFileStore } from "@/stores/currentFile";
 import FieldUUID from "@/components/widgets/FieldUUID.vue";
+import DictWidget from "@/components/widgets/DictWidget.vue";
 
 export default {
   props: {
@@ -32,11 +33,13 @@ export default {
       default: () => [],
     }
   },
-  components: { FieldUUID },
+  components: { FieldUUID, DictWidget },
   emits: ["update:modelValue"],
   setup: (props) => {
+    console.log('FieldsList props: ',props);
     const aliasComponentName = {
       uuid: 'FieldUUID',
+      dict: 'DictWidget',
     };
     return {
       aliasComponentName,

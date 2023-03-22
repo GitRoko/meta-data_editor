@@ -1,13 +1,25 @@
 <template>
   <div>
-    <v-select
+    <p>
+      keyItem:  {{ keyItem }}
+    </p>
+    <p>
+      modelValue:  {{ modelValue }}
+    </p>
+    <p>
+      renderData: {{ renderData }}
+    </p>
+    <p>
+      fieldType: {{ fieldType }}
+    </p>
+    <!-- <v-select
       :modelValue="modelValue"
       @update:modelValue="($event) => $emit('update:modelValue', $event)"
       :items="itemsFromType"
       :label="keyItem"
       :rules="validationRules"
       variant="underlined"
-    ></v-select>
+    ></v-select> -->
   </div>
 </template>
 <script>

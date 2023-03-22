@@ -8,7 +8,11 @@ const rules = {
   },
   unique: (value, isUnique, list = []) => {
     if (isUnique) {
-      return !list.includes(value) || `Value ${value} is not unique`;
+      const index = list.findIndex((item) => item === value);
+      const newList = [...list]
+      newList.splice(index, 1);
+
+      return !newList.includes(value) || `Value ${value} is not unique`;
     } else {
       return true;
     }
