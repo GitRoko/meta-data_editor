@@ -31,6 +31,7 @@
               >
                 <div class="flex flex-col items-center justify-center">
                   <dropZone/>
+                  app
                 </div>
               </div>
               <FileScreen v-else />
